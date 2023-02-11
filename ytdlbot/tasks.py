@@ -118,7 +118,7 @@ def forward_video(url, client, bot_msg):
                         or getattr(obj, "file_size", 10)
             # TODO: forward file size may exceed the limit
             vip.use_quota(chat_id, file_size)
-        caption, _ = gen_cap(bot_msg, obj)
+        caption, _ = gen_cap(bot_msg, url, obj)
         res_msg.edit_text(caption, reply_markup=gen_video_markup())
         bot_msg.edit_text(f"Download success!✅✅✅")
         red.update_metrics("cache_hit")
@@ -133,7 +133,7 @@ def forward_video(url, client, bot_msg):
 
 def ytdl_download_entrance(bot_msg, client, url):
     chat_id = bot_msg.chat.id
-    if forward_video(client, bot_msg):
+    if forward_video(url, client, bot_msg):
         return
     mode = get_user_settings(str(chat_id))[-1]
     if ENABLE_CELERY and mode in [None, "Celery"]:
@@ -357,7 +357,7 @@ def gen_cap(bm, url, video_path):
         )
     remain = bot_text.remaining_quota_caption(chat_id)
     worker = get_dl_source()
-    cap = f"{user_info}\n{file_name}\n\nInfo: {meta['width']}x{meta['height']} {file_size}\t" \
+    cap = f"{user_info}\n{file_name}\n\n\n\nInfo: {meta['width']}x{meta['height']} {file_size}\t" \
           f"{meta['duration']}s\n{remain}\n{worker}\n{bot_text.custom_text}"
     return cap, meta
 
@@ -367,7 +367,7 @@ def gen_video_markup():
         [
             [  # First row
                 InlineKeyboardButton(  # Generates a callback query when pressed
-                    "convert to audio🎧",
+                    "convert to audio",
                     callback_data="convert"
                 )
             ]
@@ -451,3 +451,4 @@ if __name__ == '__main__':
 
     idle()
     celery_client.stop()
+
