@@ -11,7 +11,7 @@ flower==1.2.0
 psutil==5.9.4
 influxdb==5.3.1
 beautifulsoup4==4.11.1
-fakeredis==2.6.0
+fakeredis==2.1.0
 supervisor==4.2.5
 tgbot-ping==1.0.6
 redis==4.3.3
@@ -21,3 +21,6 @@ requests-toolbelt==0.10.1
 ffpb==0.4.1
 youtube-search-python==1.6.6
 token-bucket==0.3.0
+flask==2.2.2
+gunicorn==20.1.0
+aiohttp==3.8.1
