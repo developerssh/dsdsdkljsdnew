@@ -185,7 +185,7 @@ def direct_normal_download(bot_msg, client, url):
     except TypeError:
         filename = getattr(req, "url", "").rsplit("/")[-1]
     except Exception as e:
-        bot_msg.edit_text(f"Download failed!❌\n\n```{e}```", disable_web_page_preview=True)
+        bot_msg.edit_text(f"Download failed!❌\n\n```{e}```", disable_web_page_preview=False)
         return
 
     if not filename:
@@ -272,7 +272,7 @@ def ytdl_normal_download(bot_msg, client, url):
     else:
         client.send_chat_action(chat_id, 'typing')
         tb = result["error"][0:4000]
-        bot_msg.edit_text(f"Download failed!❌\n\n```{tb}```", disable_web_page_preview=True)
+        bot_msg.edit_text(f"Download failed!❌\n\n```{tb}```", disable_web_page_preview=False)
 
     temp_dir.cleanup()
 
